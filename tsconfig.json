@@ -4,7 +4,20 @@
     "outDir": "build/dist",
     "module": "esnext",
     "target": "es5",
-    "lib": ["es6", "dom"],
+    "lib": [
+      "es6",
+      "dom",
+      "es2015.core",
+      "es2015.collection",
+      "es2015.generator",
+      "es2015.iterable",
+      "es2015.promise",
+      "es2015.proxy",
+      "es2015.reflect",
+      "es2015.symbol",
+      "es2015.symbol.wellknown",
+      "esnext.asynciterable"
+    ],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
@@ -17,12 +30,20 @@
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "src/@types"
+    ],
     "paths": {
-      "@source/*": ["src/*"]
+      "@source/*": [
+        "src/*"
+      ]
     }
   },
   "exclude": [
     "node_modules",
+    "config",
     "build",
     "scripts",
     "acceptance-tests",

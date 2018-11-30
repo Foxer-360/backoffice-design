@@ -1,0 +1,7 @@
+{
+  "kohinoor": {
+    "git": "https://github.com/Foxer-360/kin.git#sandbox",
+    "style": "styles/main.css",
+    "assets": "assets"
+  }
+}
