@@ -85,6 +85,7 @@ class BasicSeo extends Component<Properties, State> {
             <Input
               value={seoData.themeColor}
               disabled={true}
+              addonBefore={<div style={{ background: seoData.themeColor, width: 30, height: 20, borderRadius: 1 }} />}
               addonAfter={<Icon type="setting" onClick={this.openColorPicker} style={{ cursor: 'pointer' }} />}
             />
           </InputWrap>
