@@ -2,64 +2,90 @@ import * as React from 'react';
 import { Component } from 'react';
 
 import { Col, Icon, Input, Row } from 'antd';
+import { ColorResult, SwatchesPicker } from 'react-color';
 
 import { DefaultSeoContent } from '../form/interfaces';
 
 import InputWrap from '../inputWrap';
+
+import './styles.scss';
 
 interface Properties {
   seoData: DefaultSeoContent;
   change: (key: string, value: string) => void;
 }
 
-class BasicSeo extends Component<Properties> {
+interface State {
+  showColorPicker: boolean;
+}
+
+class BasicSeo extends Component<Properties, State> {
+
+  constructor(props: Properties) {
+    super(props);
+    this.state = { showColorPicker: false };
+  }
 
   public render(): JSX.Element {
     const { seoData } = this.props;
+
     return (
       <Row>
         <h2>{'Basic SEO Settings'}</h2>
-        <Col md={12} style={{ padding: '0 10px' }}>
+        <Col md={12} style={{ padding: '0 10px' }} id="parentRow">
           <InputWrap title="Title">
             <Input
               value={seoData.title}
-              placeholder="Page about some amazing stuffs"
+              placeholder="Title of this page"
               onChange={this.changeText('title')}
             />
           </InputWrap>
           <InputWrap title="Description">
             <Input
               value={seoData.description}
-              placeholder="This page contains some important informations"
+              placeholder="What is this page about"
               onChange={this.changeText('description')}
             />
           </InputWrap>
           <InputWrap title="Keywords">
             <Input
               value={seoData.keywords}
-              placeholder="Important information, amazing stuffs, etc..."
+              placeholder="Keywords help browsers to find your page"
               onChange={this.changeText('keywords')}
             />
           </InputWrap>
           <InputWrap title="Focus Keyword">
             <Input
               value={seoData.focusKeyword}
-              placeholder="Amazing stuff"
+              placeholder="Keyword that describes this page"
               onChange={this.changeText('focusKeyword')}
             />
           </InputWrap>
           <InputWrap title="Default Image">
             <Input
               value={seoData.defaultImage}
-              placeholder="https://example.com/image.png"
+              placeholder="URL of the image"
               onChange={this.changeText('defaultImage')}
             />
           </InputWrap>
           <InputWrap title="Theme Color">
+            {this.state.showColorPicker && (
+              <div style={{ marginBottom: 5 }}>
+                <div
+                  style={{ position: 'fixed', top: '0px', right: '0px', bottom: '0px', left: '0px' }}
+                  onClick={this.closeColorPicker}
+                />
+                <SwatchesPicker
+                  color={seoData.themeColor}
+                  height={150}
+                  onChange={this.changeTheme('themeColor')}
+                />
+              </div>
+            )}
             <Input
               value={seoData.themeColor}
-              placeholder="#000000"
-              onChange={this.changeText('themeColor')}
+              disabled={true}
+              addonAfter={<Icon type="setting" onClick={this.openColorPicker} style={{ cursor: 'pointer' }} />}
             />
           </InputWrap>
         </Col>
@@ -73,6 +99,12 @@ class BasicSeo extends Component<Properties> {
   }
 
   private changeText = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => this.props.change(key, e.target.value);
+
+  private changeTheme = (key: string) => (color: ColorResult) => this.props.change(key, color.hex);
+
+  private openColorPicker = () => this.setState({ showColorPicker: true });
+
+  private closeColorPicker = () => this.setState({ showColorPicker: false });
 
   private getPreview(seoData: DefaultSeoContent): JSX.Element {
     return (
@@ -132,10 +164,10 @@ class BasicSeo extends Component<Properties> {
             </div>
             <div style={{ color: '#545454', fontSize: 13, fontFamily: 'Arial', maxHeight: 38, overflow: 'hidden' }}>
               {seoData.description.trim() ? seoData.description : `
-              Search engine optimization (SEO) is the process of affecting the online
-              visibility of a website or a web page in a web search engine's unpaid
-              results—often referred to as "natural", "organic", or "earned" results.
-            `}
+                Search engine optimization (SEO) is the process of affecting the online
+                visibility of a website or a web page in a web search engine's unpaid
+                results—often referred to as "natural", "organic", or "earned" results.
+              `}
             </div>
           </div>
         </div>

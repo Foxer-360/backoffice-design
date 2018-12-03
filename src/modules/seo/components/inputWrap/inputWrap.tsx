@@ -4,7 +4,7 @@ import { Row } from 'antd';
 
 interface Properties {
   title: string;
-  children: JSX.Element;
+  children: JSX.Element | JSX.Element[] | any;
 }
 
 const InputWrap = ({ title, children }: Properties) => (
